@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Cost and Profit Estimator</title>
+</head>
+<body>
+    <h1>Transaction Cost and Profit Estimator</h1>
+
+    <table border="1">
+        <tr>
+            <td>Market Price:</td>
+            <td><input type="number" id="marketPrice" value="2.77"></td>
+        </tr>
+        <tr>
+            <td>Price Markup:</td>
+            <td><input type="number" id="priceMarkup" value="0.00"></td>
+        </tr>
+        <tr>
+            <td>Selling Price:</td>
+            <td><input type="number" id="sellingPrice" value="1.99"></td>
+        </tr>
+        <tr>
+            <td>Shipping Fee:</td>
+            <td><input type="number" id="shippingFee" value="1.99"></td>
+        </tr>
+        <tr>
+            <td>Order Amount:</td>
+            <td><input type="number" id="orderAmount" value="3.98"></td>
+        </tr>
+        <tr>
+            <td>Marketplace Commission Fee (9.25%):</td>
+            <td><input type="number" id="marketplaceFee" value="0.0925" disabled></td>
+        </tr>
+        <tr>
+            <td>Processing Fee (2.5% + $0.30):</td>
+            <td><input type="number" id="processingFee" value="0.025" disabled></td>
+        </tr>
+        <tr>
+            <td>State Sales Tax Fee (7.25%):</td>
+            <td><input type="number" id="salesTaxFee" value="0.0725" disabled></td>
+        </tr>
+        <tr>
+            <td>Pro Fee (2.5%):</td>
+            <td><input type="number" id="proFee" value="0.025" disabled></td>
+        </tr>
+    </table>
+
+    <button onclick="calculateProfit()">Calculate Profit</button>
+
+    <h2>Result:</h2>
+    <p id="result">Profit will be displayed here</p>
+
+    <script>
+        function calculateProfit() {
+            const marketPrice = parseFloat(document.getElementById('marketPrice').value);
+            const priceMarkup = parseFloat(document.getElementById('priceMarkup').value);
+            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value);
+            const shippingFee = parseFloat(document.getElementById('shippingFee').value);
+            const orderAmount = parseFloat(document.getElementById('orderAmount').value);
+
+            // Fees (percentages are decimal here)
+            const marketplaceFee = sellingPrice * 0.0925;
+            const processingFee = sellingPrice * 0.025 + 0.3;
+            const salesTaxFee = sellingPrice * 0.0725;
+            const proFee = sellingPrice * 0.025;
+
+            // Total fees and costs
+            const totalFees = marketplaceFee + processingFee + salesTaxFee + proFee;
+            const totalCost = marketPrice + totalFees;
+
+            // Profit calculation
+            const profit = sellingPrice + shippingFee - totalCost;
+
+            document.getElementById('result').textContent = `Total Profit: $${profit.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
